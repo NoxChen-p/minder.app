@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MinderApp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background: #111827;
+            color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        .desc {
+            color: #9ca3af;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+        .auto-download-btn {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            transition: background 0.2s ease;
+        }
+        .auto-download-btn:hover {
+            background-color: #1d4ed8;
+        }
+        .manual-title {
+            color: #d1d5db;
+            margin: 2rem 0 1rem;
+            font-size: 0.95rem;
+        }
+        .manual-buttons {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+        }
+        .manual-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 10px;
+            border: 1px solid #4b5563;
+            background: #1f2937;
+            color: #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .manual-btn:hover {
+            background: #374151;
+        }
+        .github-link {
+            margin-top: 3rem;
+            display: inline-block;
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        .github-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MinderApp</h1>
+        <p class="desc">A simple and practical application</p>
+        <!-- Auto detect download button -->
+        <button class="auto-download-btn" id="autoDownload">Download MinderApp</button>
+
+        <p class="manual-title">Manually select version</p>
+        <div class="manual-buttons">
+            <button class="manual-btn" id="downloadApk">Android - MinderApp 1.1.1 (minder.apk)</button>
+            <button class="manual-btn" id="downloadExe">Windows - MinderApp 1.1.1 (minder.exe)</button>
+        </div>
+
+        <a class="github-link" href="https://github.com/NoxChen-p/minder.app" target="_blank">
+            GitHub: github.com/NoxChen-p/minder.app
+        </a>
+    </div>
+
+    <script>
+        const autoBtn = document.getElementById('autoDownload');
+        const apkBtn = document.getElementById('downloadApk');
+        const exeBtn = document.getElementById('downloadExe');
+
+        function getTargetFile() {
+            const ua = navigator.userAgent.toLowerCase();
+            if (/android/.test(ua)) {
+                return "minder.apk";
+            } else if (/win/.test(ua)) {
+                return "minder.exe";
+            } else {
+                return "minder.apk";
+            }
+        }
+
+        autoBtn.onclick = function () {
+            const filename = getTargetFile();
+            startDownload(filename);
+        }
+
+        apkBtn.onclick = () => startDownload("minder.apk");
+        exeBtn.onclick = () => startDownload("minder.exe");
+
+        function startDownload(fileName) {
+            const a = document.createElement('a');
+            a.href = fileName;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        window.onload = function(){
+            const target = getTargetFile();
+            if(target === "minder.apk"){
+                autoBtn.textContent = "Download MinderApp 1.1.1 (Android)";
+            }else{
+                autoBtn.textContent = "Download MinderApp 1.1.1 (Windows)";
+            }
+        }
+    </script>
+</body>
+</html>
